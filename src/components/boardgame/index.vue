@@ -8,7 +8,7 @@
 </template>
 <script setup lang="ts">
 import BoardGameCell from './BoardGameCell.vue'
-import { Board } from '@/enum/board.ts'
+import { Board } from '@/enum/board'
 const prop = defineProps<{ boardHolder: Board }>()
 const cellRowNumber = 3
 const cellColumnNumber = 3
