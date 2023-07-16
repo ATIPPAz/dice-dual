@@ -6,6 +6,7 @@
           :value="dice.value"
           :color="dice.color"
           isMove
+          style="margin-left: 1px"
           v-for="dice in diceSlot"
           :class="{ 'float-dice ': diceFloat }"
         />
@@ -56,6 +57,7 @@ watch(
     width: calc(100% - 10px);
     border: 1px solid black;
     border-radius: 5px;
+    align-items: center;
     display: flex;
   }
 }
