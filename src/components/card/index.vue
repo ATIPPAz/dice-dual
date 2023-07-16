@@ -3,7 +3,7 @@
     <slot></slot>
   </div>
 </template>
-<script setup>
+<script setup lang="ts">
 import { defineProps } from 'vue'
 const props = defineProps({
   rounded: {
