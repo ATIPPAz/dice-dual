@@ -2,7 +2,7 @@
 import ATPCard from '@/components/card/index.vue'
 import BoardGame from '@/components/boardgame/index.vue'
 import DiceSlot from '@/components/diceSlot/index.vue'
-import { Board } from '@/enum/board.ts'
+import { Board } from '@/enum/board'
 </script>
 
 <template>
