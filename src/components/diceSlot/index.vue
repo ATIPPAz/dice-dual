@@ -10,7 +10,7 @@
 <script setup lang="ts">
 import Dice from '@/components/dice/index.vue'
 import { ref, watch } from 'vue'
-import { useDiceStore } from '@/stores/dice.ts'
+import { useDiceStore } from '@/stores/dice'
 import { storeToRefs } from 'pinia'
 const { diceValue, returnDice } = storeToRefs(useDiceStore())
 const { hasValue, resetReturnDice, resetDiceValue } = useDiceStore()
