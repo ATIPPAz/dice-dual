@@ -1,12 +1,17 @@
 <template>
-  <Dice
-    class="board-game-cell"
-    :class="{ cursor: hasValue() }"
-    :style="colorDisplay"
-    @click="addDiceValue"
-    :color="color"
-    :value="value"
-  />
+  <div class="board-game-cell">
+    <Dice
+      :class="{
+        'cursor-allow': hasValue(),
+        'cursor-notallow':
+          (hasValue() && value !== null) || (props.boardHolder !== Board.MY_BOARD && hasValue())
+      }"
+      :style="colorDisplay"
+      @click="addDiceValue"
+      :color="color"
+      :value="value"
+    />
+  </div>
 </template>
 <script setup lang="ts">
 import Dice from '@/components/dice/index.vue'
@@ -38,8 +43,11 @@ function addDiceValue() {
 }
 </script>
 <style scoped>
-.cursor {
+.cursor-allow {
   cursor: pointer;
+}
+.cursor-notallow {
+  cursor: no-drop;
 }
 .board-game-cell {
   display: flex;
