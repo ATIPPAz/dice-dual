@@ -4,7 +4,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { useDiceStore } from '@/stores/dice.ts'
+import { useDiceStore } from '@/stores/dice'
 const { setDiceValue } = useDiceStore()
 const props = defineProps<{
   isMove: boolean
