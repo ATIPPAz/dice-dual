@@ -1,5 +1,10 @@
 <template>
-  <div class="dice" @click="select" :class="{ cursor: props.value }" :style="color">
+  <div
+    class="dice"
+    @click="select"
+    :class="{ hasValue: props.value, cursor: props.isMove }"
+    :style="color"
+  >
     {{ props.value }}
   </div>
 </template>
@@ -39,6 +44,9 @@ function select() {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.hasValue {
+  border: 1px solid black;
 }
 .cursor {
   cursor: pointer;
