@@ -1,8 +1,14 @@
 <template>
   <div class="dice-float">
     <div class="dice-slot">
-      <div class="dice-container">
-        <Dice :value="dice" isMove v-for="dice in diceSlot" />
+      <div class="dice-container" :class="{ 'float-board': diceFloat }">
+        <Dice
+          :value="dice.value"
+          :color="dice.color"
+          isMove
+          v-for="dice in diceSlot"
+          :class="{ 'float-dice ': diceFloat }"
+        />
       </div>
     </div>
   </div>
@@ -12,40 +18,26 @@ import Dice from '@/components/dice/index.vue'
 import { ref, watch } from 'vue'
 import { useDiceStore } from '@/stores/dice'
 import { storeToRefs } from 'pinia'
-const { diceValue, returnDice } = storeToRefs(useDiceStore())
-const { hasValue, resetReturnDice, resetDiceValue } = useDiceStore()
+import { mapDiceNumber, DiceColor, mapDiceColor } from '@/enum/board'
+const { diceValue, diceFloat, returnDice } = storeToRefs(useDiceStore())
+const { resetDiceFloat, resetReturnDice } = useDiceStore()
 const diceRandom = ref<number>(0)
-const diceSlot = ref<number[]>([])
-const dontSetNewValue = ref(false)
+const diceSlot = ref<{ value: number; color: DiceColor }[]>([])
 function setDice() {
-  diceSlot.value.push((diceRandom.value = Math.floor(Math.random() * 6) + 1))
+  const rand = Math.floor(Math.random() * 6) + 1
+  diceSlot.value.push({ value: mapDiceNumber(rand), color: mapDiceColor(rand) })
 }
 
 setDice()
 watch(
   () => diceValue.value,
   (e) => {
-    if (e === null) {
-      if (dontSetNewValue.value) {
-        dontSetNewValue.value = false
-      } else {
-        setDice()
-      }
-    } else {
+    if (e === null && returnDice.value === false) {
       diceSlot.value.pop()
-    }
-  }
-)
-watch(
-  () => returnDice.value,
-  (e) => {
-    if (e) {
-      if (hasValue()) {
-        diceSlot.value.push(diceValue.value!)
-        dontSetNewValue.value = true
-        resetReturnDice()
-        resetDiceValue()
-      }
+      resetDiceFloat()
+      setDice()
+    } else {
+      resetReturnDice()
     }
   }
 )
@@ -67,6 +59,34 @@ watch(
     display: flex;
   }
 }
+.float-board {
+  position: relative;
+  .float-dice {
+    position: absolute;
+    animation-name: floating-up;
+    animation-duration: 0.075s;
+
+    // animation-timing-function: ease-in-out;
+    top: -10px;
+    animation-timing-function: linear;
+  }
+}
+@keyframes floating-up {
+  0% {
+    top: 0px;
+  }
+  25% {
+    top: -5px;
+  }
+  50%,
+  100% {
+    top: -10px;
+  }
+  75% {
+    top: -15px;
+  }
+}
+
 .dice-float {
   position: absolute;
   bottom: 0;
