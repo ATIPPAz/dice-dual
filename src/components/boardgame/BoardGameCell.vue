@@ -16,7 +16,7 @@ function addDiceValue() {
   if (hasValue() && props.boardHolder === Board.MY_BOARD) {
     value.value = diceValue.value
     resetDiceValue()
-  } else if (props.boardHolder === Board.ENEMY_BOARD) {
+  } else if (hasValue() && props.boardHolder === Board.ENEMY_BOARD) {
     alert('not your board')
     setReturnDice()
   }
