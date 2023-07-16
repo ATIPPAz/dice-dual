@@ -1,5 +1,7 @@
 <template>
-  <div class="board-game-cell" @click="addDiceValue">{{ value || '' }}</div>
+  <div class="board-game-cell" :class="{ cursor: hasValue() }" @click="addDiceValue">
+    {{ value || '' }}
+  </div>
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
@@ -21,13 +23,15 @@ function addDiceValue() {
 }
 </script>
 <style scoped>
+.cursor {
+  cursor: pointer;
+}
 .board-game-cell {
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 10px;
   border: 1px solid #ececed;
-  cursor: pointer;
   width: 49px;
   height: 49px;
 }
