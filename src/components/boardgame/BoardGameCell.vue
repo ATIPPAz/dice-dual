@@ -3,9 +3,9 @@
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useDiceStore } from '@/stores/dice.ts'
+import { useDiceStore } from '@/stores/dice'
 import { storeToRefs } from 'pinia'
-import { Board } from '@/enum/board.ts'
+import { Board } from '@/enum/board'
 const { resetDiceValue, hasValue, setReturnDice } = useDiceStore()
 const { diceValue } = storeToRefs(useDiceStore())
 const value = ref<null | number>(null)
