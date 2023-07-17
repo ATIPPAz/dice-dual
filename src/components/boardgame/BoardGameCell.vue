@@ -2,10 +2,11 @@
   <div class="board-game-cell">
     <Dice
       :class="{
-        'cursor-allow': hasValue(),
+        'cursor-allow': hasDice(),
         'cursor-notallow':
-          (hasValue() && value !== null) || (props.boardHolder !== Board.MY_BOARD && hasValue())
+          (value !== null && hasDice() ) || (props.boardHolder !== Board.MY_BOARD ) && hasDice()
       }"
+      :float="false"
       :style="colorDisplay"
       @click="addDiceValue"
       :color="color"
@@ -16,29 +17,25 @@
 <script setup lang="ts">
 import Dice from '@/components/dice/index.vue'
 import { ref, computed } from 'vue'
-import { useDiceStore } from '@/stores/dice'
 import { storeToRefs } from 'pinia'
 import { Board } from '@/enum/board'
 import { DiceNumber, DiceColor } from '@/enum/board'
 import {useDiceSlotStore} from '@/stores/diceSlot'
-const {addNewRandomDice,removeDiceInSlot,putdownDice} = useDiceSlotStore()
-const {diceSlot} = storeToRefs(useDiceSlotStore())
-const { hasValue } = useDiceStore()
-const { diceValue, colorDice } = storeToRefs(useDiceStore())
+const {resetDiceSlot,removeDiceInSlot,hasDice} = useDiceSlotStore()
+const {diceSelect,selectIndex} = storeToRefs(useDiceSlotStore())
 
 const value = ref<null | DiceNumber>(null)
 const color = ref<null | DiceColor>(null)
 const props = defineProps<{ boardHolder: Board }>()
 const colorDisplay = computed(() => `background-color:${color.value}`)
 function addDiceValue() {
-  if (hasValue() && props.boardHolder === Board.MY_BOARD && value.value === null) {
-    value.value = diceValue.value
-    color.value = colorDice.value
-    removeDiceInSlot()
-    addNewRandomDice()
+  if (diceSelect.value && props.boardHolder === Board.MY_BOARD && value.value === null) {
+    value.value = diceSelect.value!.value
+    color.value = diceSelect.value!.color
+    removeDiceInSlot(selectIndex.value!,true)
     return
   } 
-  putdownDice()
+  resetDiceSlot()
 }
 </script>
 <style scoped>

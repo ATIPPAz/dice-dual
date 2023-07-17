@@ -1,14 +1,17 @@
 <template>
   <div class="dice-float">
     <div class="dice-slot">
-      <div class="dice-container" :class="{ 'float-board': diceFloat }">
+      <div class="dice-container" >
         <Dice
+          class="float-board"
           :value="dice.value"
           :color="dice.color"
+          :float="dice.float"
+          :index="index"
           isMove
           style="margin-left: 1px"
-          v-for="dice in diceSlot"
-          :class="{ 'float-dice ': diceFloat }"
+          v-for="dice,index in diceSlot"
+          :class="{ 'float-dice ': dice.float }"
         />
       </div>
     </div>
@@ -16,33 +19,9 @@
 </template>
 <script setup lang="ts">
 import Dice from '@/components/dice/index.vue'
-import { ref, watch } from 'vue'
-import { useDiceStore } from '@/stores/dice'
 import { storeToRefs } from 'pinia'
-import { mapDiceNumber, DiceColor, mapDiceColor } from '@/enum/board'
 import {useDiceSlotStore} from '@/stores/diceSlot'
 const {diceSlot} = storeToRefs(useDiceSlotStore())
-const { diceValue, diceFloat } = storeToRefs(useDiceStore())
-// const diceRandom = ref<number>(0)
-// const diceSlot = ref<{ value: number; color: DiceColor }[]>([])
-// function setDice() {
-//   const rand = Math.floor(Math.random() * 6) + 1
-//   diceSlot.value.push({ value: mapDiceNumber(rand), color: mapDiceColor(rand) })
-// }
-
-// setDice()
-// watch(
-//   () => diceValue.value,
-//   (e) => {
-//     if (e === null && !returnDice.value) {
-//       diceSlot.value.pop()
-//       resetDiceFloat()
-//       // setDice()
-//     } else {
-//       resetReturnDice()
-//     }
-//   }
-// )
 </script>
 <style scoped lang="scss">
 .dice-slot {
@@ -64,31 +43,9 @@ const { diceValue, diceFloat } = storeToRefs(useDiceStore())
 }
 .float-board {
   position: relative;
-  .float-dice {
-    position: absolute;
-    animation-name: floating-up;
-    animation-duration: 0.075s;
+  
+}
 
-    // animation-timing-function: ease-in-out;
-    top: -10px;
-    animation-timing-function: linear;
-  }
-}
-@keyframes floating-up {
-  0% {
-    top: 0px;
-  }
-  25% {
-    top: -5px;
-  }
-  50%,
-  100% {
-    top: -10px;
-  }
-  75% {
-    top: -15px;
-  }
-}
 
 .dice-float {
   position: absolute;

@@ -17,8 +17,6 @@ const cellColumnNumber = 3
 .board-game {
   border-radius: 10px;
   border: 1px solid #ececed;
-  /* display: grid; */
-  /* grid-template-columns: repeat(3, 1fr); */
   display: flex;
   justify-content: center;
   align-items: center;
