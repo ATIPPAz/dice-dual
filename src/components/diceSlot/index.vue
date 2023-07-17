@@ -20,28 +20,29 @@ import { ref, watch } from 'vue'
 import { useDiceStore } from '@/stores/dice'
 import { storeToRefs } from 'pinia'
 import { mapDiceNumber, DiceColor, mapDiceColor } from '@/enum/board'
-const { diceValue, diceFloat, returnDice } = storeToRefs(useDiceStore())
-const { resetDiceFloat, resetReturnDice } = useDiceStore()
-const diceRandom = ref<number>(0)
-const diceSlot = ref<{ value: number; color: DiceColor }[]>([])
-function setDice() {
-  const rand = Math.floor(Math.random() * 6) + 1
-  diceSlot.value.push({ value: mapDiceNumber(rand), color: mapDiceColor(rand) })
-}
+import {useDiceSlotStore} from '@/stores/diceSlot'
+const {diceSlot} = storeToRefs(useDiceSlotStore())
+const { diceValue, diceFloat } = storeToRefs(useDiceStore())
+// const diceRandom = ref<number>(0)
+// const diceSlot = ref<{ value: number; color: DiceColor }[]>([])
+// function setDice() {
+//   const rand = Math.floor(Math.random() * 6) + 1
+//   diceSlot.value.push({ value: mapDiceNumber(rand), color: mapDiceColor(rand) })
+// }
 
-setDice()
-watch(
-  () => diceValue.value,
-  (e) => {
-    if (e === null && returnDice.value === false) {
-      diceSlot.value.pop()
-      resetDiceFloat()
-      setDice()
-    } else {
-      resetReturnDice()
-    }
-  }
-)
+// setDice()
+// watch(
+//   () => diceValue.value,
+//   (e) => {
+//     if (e === null && !returnDice.value) {
+//       diceSlot.value.pop()
+//       resetDiceFloat()
+//       // setDice()
+//     } else {
+//       resetReturnDice()
+//     }
+//   }
+// )
 </script>
 <style scoped lang="scss">
 .dice-slot {

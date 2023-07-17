@@ -15,18 +15,19 @@ export const useDiceStore = defineStore('dice', () => {
     diceState.value = mapDiceNumber(value)
     colorDiceState.value = mapDiceColor(value)
   }
+
   function resetDiceValue() {
     diceState.value = null
   }
   function hasValue() {
     return diceState.value !== null
   }
-  function setReturnDice() {
-    returnDiceState.value = true
-  }
-  function resetReturnDice() {
-    returnDiceState.value = false
-  }
+  // function setReturnDice() {
+  //   returnDiceState.value = true
+  // }
+  // function resetReturnDice() {
+  //   returnDiceState.value = false
+  // }
   function setDiceFloat() {
     diceFloatState.value = true
   }
@@ -39,8 +40,8 @@ export const useDiceStore = defineStore('dice', () => {
     resetDiceValue,
     hasValue,
     returnDice,
-    setReturnDice,
-    resetReturnDice,
+    // setReturnDice,
+    // resetReturnDice,
     diceFloat,
     setDiceFloat,
     resetDiceFloat,

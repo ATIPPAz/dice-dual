@@ -11,8 +11,8 @@
 <script setup lang="ts">
 import { useDiceStore } from '@/stores/dice'
 import { DiceNumber, DiceColor } from '@/enum/board'
-import { computed } from 'vue'
-
+import { computed,ref } from 'vue'
+const float = ref(false)
 const { setDiceValue, setDiceFloat, resetDiceFloat } = useDiceStore()
 const props = withDefaults(
   defineProps<{
@@ -31,6 +31,7 @@ const color = computed(() => `background-color:${props.color}`)
 
 function select() {
   if (props.isMove) {
+    float.value = true
     setDiceFloat()
     setDiceValue(props.value!)
   }
