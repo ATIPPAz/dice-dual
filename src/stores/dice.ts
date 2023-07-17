@@ -1,6 +1,6 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { DiceColor, DiceNumber, mapDiceColor, mapDiceNumber } from '@/enum/board'
+import { DiceColor, mapDiceColor, mapDiceNumber } from '@/enum/board'
 export const useDiceStore = defineStore('dice', () => {
   const diceState = ref<null | number>(null)
   const returnDiceState = ref(false)
@@ -22,12 +22,6 @@ export const useDiceStore = defineStore('dice', () => {
   function hasValue() {
     return diceState.value !== null
   }
-  // function setReturnDice() {
-  //   returnDiceState.value = true
-  // }
-  // function resetReturnDice() {
-  //   returnDiceState.value = false
-  // }
   function setDiceFloat() {
     diceFloatState.value = true
   }
@@ -40,8 +34,6 @@ export const useDiceStore = defineStore('dice', () => {
     resetDiceValue,
     hasValue,
     returnDice,
-    // setReturnDice,
-    // resetReturnDice,
     diceFloat,
     setDiceFloat,
     resetDiceFloat,
