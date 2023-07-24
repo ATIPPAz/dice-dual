@@ -2,26 +2,30 @@
   <div class="dice-float">
     <div class="dice-slot">
       <div class="dice-container">
-        <Dice
-          class="float-board"
+        <div  v-for="(dice, index) in diceSlot">
+          <Dice
+          :forbidFloat="false"
           :value="dice.value"
           :color="dice.color"
-          :float="dice.float"
-          :index="index"
-          isMove
           style="margin-left: 1px"
-          v-for="(dice, index) in diceSlot"
-          :class="{ 'float-dice ': dice.float }"
+          :index="index"
+          @placeSuccess="removeDice"
         />
+        </div>
       </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import Dice from "@/components/dice/index.vue";
+import Dice from "@/components/dice/DiceExtension.vue";
 import { storeToRefs } from "pinia";
 import { useDiceSlotStore } from "@/stores/diceSlot";
-const { diceSlot } = storeToRefs(useDiceSlotStore());
+import { reactive,ref } from "vue";
+import { DiceColor, DiceNumber } from "@/enum/board";
+const diceSlot = ref<{value:DiceNumber,color:DiceColor}[]>([{color:DiceColor.Five,value:DiceNumber.Five},{color:DiceColor.Four,value:DiceNumber.Four},{color:DiceColor.One,value:DiceNumber.One},{color:DiceColor.Two,value:DiceNumber.Two}])
+function removeDice(index:number){
+  diceSlot.value.splice(index, 1)
+}
 </script>
 <style scoped lang="scss">
 .dice-slot {
@@ -37,7 +41,6 @@ const { diceSlot } = storeToRefs(useDiceSlotStore());
     width: calc(100% - 10px);
     border: 1px solid black;
     border-radius: 5px;
-    align-items: center;
     display: flex;
   }
 }
