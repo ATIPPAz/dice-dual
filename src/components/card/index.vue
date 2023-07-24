@@ -7,9 +7,9 @@
 const props = defineProps({
   rounded: {
     type: Boolean,
-    default: false
-  }
-})
+    default: false,
+  },
+});
 </script>
 <style scoped>
 .atp-card {

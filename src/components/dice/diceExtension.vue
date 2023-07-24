@@ -1,30 +1,41 @@
 <template>
-<div class="float-dice-container">
-  <Dice :class="{'float-dice':isFloating}" @click="isFloating =!isFloating"  
-    :value="12"
-    :color="null"
-    :float="false"
-    :index="1"/>
-</div>
+  <div class="float-dice-container">
+    <Dice
+      :class="{ 'float-dice': isFloating }"
+      @click="diceClick"
+      :value="value!"
+      :color="color!"
+      :float="false"
+      :index="1"
+    />
+  </div>
 </template>
-<script setup>
-import Dice from './index.vue'
-import {ref} from 'vue'
-const isFloating = ref(false)
+<script setup lang="ts">
+import type { DiceColor, DiceNumber } from "@/enum/board";
+import Dice from "./index.vue";
+import { ref } from "vue";
+const isFloating = ref(false);
+const props = defineProps<{
+  value: DiceNumber | undefined;
+  color: DiceColor | undefined;
+  forbidFloat: boolean;
+}>();
+function diceClick() {
+  if (props.forbidFloat) return;
+  isFloating.value = !isFloating.value;
+}
 </script>
 <style scoped lang="scss">
-
 .float-dice-container {
   position: relative;
-  
 }
 .float-dice {
-    position: absolute;
-    animation-name: floating-up;
-    animation-duration: 0.075s;
-    top: -10px;
-    animation-timing-function: linear;
-  }
+  position: absolute;
+  animation-name: floating-up;
+  animation-duration: 0.075s;
+  top: -10px;
+  animation-timing-function: linear;
+}
 @keyframes floating-up {
   0% {
     top: 0px;

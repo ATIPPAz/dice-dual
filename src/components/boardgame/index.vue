@@ -1,27 +1,48 @@
 <template>
-  {{ prop.boardHolder }}
-  {{ boardGame }}
-  <button @click="test">ad</button>
-  <div class="board-game" :class="{ enemy: prop.boardHolder === Board.ENEMY_BOARD }">
+  <div
+    class="board-game"
+    :class="{ enemy: props.boardHolder === Board.ENEMY_BOARD }"
+  >
     <div v-for="column in cellColumnNumber">
-      <BoardGameCell :board-holder="prop.boardHolder" v-for="row in cellRowNumber" />
+      <div v-for="row in cellRowNumber">
+        <BoardGameCell>
+          <div
+            v-if="boardGame[column - 1][row - 1]"
+            :class="{
+              'cursor-allow': true,
+              'cursor-notallow': props.boardHolder === Board.ENEMY_BOARD,
+            }"
+          >
+            <Dice
+              :forbid-float="props.boardHolder === Board.ENEMY_BOARD"
+              :value="boardGame[column - 1][row - 1]?.value"
+              :color="boardGame[column - 1][row - 1]?.color"
+            />
+          </div>
+        </BoardGameCell>
+      </div>
     </div>
   </div>
-  <Dice />
 </template>
 <script setup lang="ts">
-import BoardGameCell from './BoardGameCell.vue'
-import Dice  from '../dice/diceExtension.vue'
+import BoardGameCell from "./BoardGameCell.vue";
+import Dice from "@/components/dice/DiceExtension.vue";
 
-import { Board } from '@/enum/board'
-import {ref} from 'vue'
-const prop = defineProps<{ boardHolder: Board }>()
-const cellRowNumber = 3
-const cellColumnNumber = 3
-function test(){
-  boardGame.value[1][2] = 2
+import { Board, DiceColor, DiceNumber } from "@/enum/board";
+import { ref } from "vue";
+const props = defineProps<{ boardHolder: Board }>();
+const cellRowNumber = 3;
+const cellColumnNumber = 3;
+
+interface Dice {
+  value: DiceNumber;
+  color: DiceColor;
 }
-const boardGame = ref<null[][]|number[][]>([[null,null,null],[null,null,null],[null,null,null]])
+const boardGame = ref<Array<Array<null | Dice>>>([
+  [{ value: DiceNumber.Five, color: DiceColor.Five }, null, null],
+  [{ value: DiceNumber.Two, color: DiceColor.Two }, null, null],
+  [null, null, null],
+]);
 </script>
 <style scoped>
 .board-game {
@@ -36,5 +57,11 @@ const boardGame = ref<null[][]|number[][]>([[null,null,null],[null,null,null],[n
 }
 .enemy {
   border: 1px solid red;
+}
+.cursor-allow {
+  cursor: pointer;
+}
+.cursor-notallow {
+  cursor: no-drop;
 }
 </style>

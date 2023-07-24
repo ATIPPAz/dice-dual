@@ -1,7 +1,7 @@
 <template>
   <div class="dice-float">
     <div class="dice-slot">
-      <div class="dice-container" >
+      <div class="dice-container">
         <Dice
           class="float-board"
           :value="dice.value"
@@ -10,7 +10,7 @@
           :index="index"
           isMove
           style="margin-left: 1px"
-          v-for="dice,index in diceSlot"
+          v-for="(dice, index) in diceSlot"
           :class="{ 'float-dice ': dice.float }"
         />
       </div>
@@ -18,10 +18,10 @@
   </div>
 </template>
 <script setup lang="ts">
-import Dice from '@/components/dice/index.vue'
-import { storeToRefs } from 'pinia'
-import {useDiceSlotStore} from '@/stores/diceSlot'
-const {diceSlot} = storeToRefs(useDiceSlotStore())
+import Dice from "@/components/dice/index.vue";
+import { storeToRefs } from "pinia";
+import { useDiceSlotStore } from "@/stores/diceSlot";
+const { diceSlot } = storeToRefs(useDiceSlotStore());
 </script>
 <style scoped lang="scss">
 .dice-slot {
@@ -43,9 +43,7 @@ const {diceSlot} = storeToRefs(useDiceSlotStore())
 }
 .float-board {
   position: relative;
-  
 }
-
 
 .dice-float {
   position: absolute;
