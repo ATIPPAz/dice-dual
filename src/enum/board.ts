@@ -2,6 +2,12 @@ export enum Board {
   MY_BOARD = 'MY_BOARD',
   ENEMY_BOARD = 'ENEMY_BOARD'
 }
+
+export enum DiceState {
+  SLOT = "SLOT",
+  BOARD = "BOARD"
+}
+
 enum Color {
   Green = "#CCE8DB",
   Blue = '#C1D4E3',
