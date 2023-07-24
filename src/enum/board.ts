@@ -1,20 +1,20 @@
 export enum Board {
-  MY_BOARD = 'MY_BOARD',
-  ENEMY_BOARD = 'ENEMY_BOARD'
+  MY_BOARD = "MY_BOARD",
+  ENEMY_BOARD = "ENEMY_BOARD",
 }
 
 export enum DiceState {
   SLOT = "SLOT",
-  BOARD = "BOARD"
+  BOARD = "BOARD",
 }
 
 enum Color {
   Green = "#CCE8DB",
-  Blue = '#C1D4E3',
-  Purple = '#BEB4D6',
-  Pink = '#FADAE2',
-  Red = '#F8B3CA',
-  Magenta = '#CC97C1',
+  Blue = "#C1D4E3",
+  Purple = "#BEB4D6",
+  Pink = "#FADAE2",
+  Red = "#F8B3CA",
+  Magenta = "#CC97C1",
 }
 
 export enum DiceNumber {

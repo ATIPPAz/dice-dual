@@ -1,40 +1,70 @@
 <template>
-  {{ prop.boardHolder }}
   {{ boardGame }}
-  <button @click="test">ad</button>
-  <div class="board-game" :class="{ enemy: prop.boardHolder === Board.ENEMY_BOARD }">
-    <div v-for="column in cellColumnNumber">
-      <BoardGameCell :board-holder="prop.boardHolder" v-for="row in cellRowNumber" />
+  <div
+    class="board-game"
+    :class="{ enemy: props.boardHolder === Board.ENEMY_BOARD }"
+  >
+    <div v-for="column,index in boardGame" class="board-layout">
+        <BoardGameCell @click="placeDice(index)">
+            <Dice
+              v-if="column"
+              :forbid-float="props.boardHolder === Board.ENEMY_BOARD"
+              :value="column.value"
+              :color="column.color"
+              :class="{
+              'cursor-allow': true,
+              'cursor-notallow': props.boardHolder === Board.ENEMY_BOARD,
+            }"
+            />    
+        </BoardGameCell>
     </div>
   </div>
-  <Dice />
 </template>
 <script setup lang="ts">
-import BoardGameCell from './BoardGameCell.vue'
-import Dice  from '../dice/diceExtension.vue'
+import BoardGameCell from "./BoardGameCell.vue";
+import Dice from "@/components/dice/DiceExtension.vue";
 
-import { Board } from '@/enum/board'
-import {ref} from 'vue'
-const prop = defineProps<{ boardHolder: Board }>()
-const cellRowNumber = 3
-const cellColumnNumber = 3
-function test(){
-  boardGame.value[1][2] = 2
+import { Board, DiceColor, DiceNumber } from "@/enum/board";
+import { useDiceStore } from "@/stores/dice";
+
+const diceStore = useDiceStore()
+const {getDiceValue} = diceStore
+import { ref } from "vue";
+const props = defineProps<{ boardHolder: Board }>();
+const cellRowNumber = 3;
+const cellColumnNumber = 3;
+function placeDice(index:number){
+  boardGame.value[index] = getDiceValue()
 }
-const boardGame = ref<null[][]|number[][]>([[null,null,null],[null,null,null],[null,null,null]])
+interface Dice {
+  value: DiceNumber;
+  color: DiceColor;
+}
+const boardGame = ref<Array<null | Dice>>([
+  { value: DiceNumber.Five, color: DiceColor.Five }, null, null,
+  { value: DiceNumber.Two, color: DiceColor.Two }, null, null,
+  null, null, null,
+]);
 </script>
 <style scoped>
+.board-layout{
+
+}
 .board-game {
   border-radius: 10px;
   border: 1px solid #ececed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
   padding: 2px;
   width: fit-content;
-  border: 1px solid burlywood;
 }
 .enemy {
   border: 1px solid red;
+}
+.cursor-allow {
+  cursor: pointer;
+}
+.cursor-notallow {
+  cursor: no-drop;
 }
 </style>
